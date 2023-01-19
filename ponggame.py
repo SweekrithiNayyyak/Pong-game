@@ -53,6 +53,8 @@ ball.shapesize(stretch_wid=0.5,stretch_len=0.5)
 ball.color("white")
 ball.penup()
 ball.goto(0,0)
+ball.dx=1
+ball.dy=-2
 
 #to detect keypress on the window
 wn.listen()
@@ -63,6 +65,20 @@ wn.onkeypress(computerpaddledown,"Down")
 
 while True:
     wn.update()
+    ball.sety(ball.ycor()+ball.dy)
+    ball.setx(ball.xcor()+ball.dx)
+    
+    if ball.ycor()>290:
+        ball.sety(290)
+        ball.dy*=-1
+        
+    if ball.ycor()<-290:
+        ball.sety(-290)
+        ball.dy*=-1
+    
+    if ball.xcor()>380 or ball.xcor()<-380:
+        ball.setx(0)
+        ball.sety(0)
 
 
 
