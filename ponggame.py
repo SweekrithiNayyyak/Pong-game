@@ -1,4 +1,29 @@
 import turtle
+
+def playerpaddleup():
+    #stores current value of y cordinate into a variable
+    y=playerPaddle.ycor()
+    y+=20
+    playerPaddle.sety(y)
+
+def playerpaddledown():
+    #stores current value of y cordinate into a variable
+    y=playerPaddle.ycor()
+    y-=20
+    playerPaddle.sety(y)
+    
+def computerpaddleup():
+    #stores current value of y cordinate into a variable
+    y=computerPaddle.ycor()
+    y+=20
+    computerPaddle.sety(y)
+
+def computerpaddledown():
+    #stores current value of y cordinate into a variable
+    y=computerPaddle.ycor()
+    y-=20
+    computerPaddle.sety(y)
+
 wn=turtle.Screen()
 wn.title("Pong by Sweek")
 wn.bgcolor("red")
@@ -29,7 +54,16 @@ ball.color("white")
 ball.penup()
 ball.goto(0,0)
 
+#to detect keypress on the window
+wn.listen()
+wn.onkeypress(playerpaddleup,"w")
+wn.onkeypress(playerpaddledown,"x")
+wn.onkeypress(computerpaddleup,"Up")
+wn.onkeypress(computerpaddledown,"Down")
+
 while True:
     wn.update()
+
+
 
 turtle.done()
