@@ -3,13 +3,13 @@ import turtle
 def playerpaddleup():
     #stores current value of y cordinate into a variable
     y=playerPaddle.ycor()
-    y+=20
+    y+=40
     playerPaddle.sety(y)
 
 def playerpaddledown():
     #stores current value of y cordinate into a variable
     y=playerPaddle.ycor()
-    y-=20
+    y-=40
     playerPaddle.sety(y)
     
 def computerpaddleup():
@@ -47,7 +47,7 @@ computerPaddle.penup()
 computerPaddle.goto(350,100)
 
 ball=turtle.Turtle()
-ball.speed(0)
+ball.speed(2)
 ball.shape("square")
 ball.shapesize(stretch_wid=0.5,stretch_len=0.5)
 ball.color("white")
@@ -79,6 +79,19 @@ while True:
     if ball.xcor()>380 or ball.xcor()<-380:
         ball.setx(0)
         ball.sety(0)
+    
+    #computerPaddle.sety(ball.ycor())
+    
+    
+    
+    #paddle and ball collisions
+    if ball.xcor()>340 and ball.ycor()<computerPaddle.ycor()+50 and ball.ycor() > computerPaddle.ycor()-50:
+        ball.dx*=-1
+    
+    if ball.xcor()<-340 and ball.ycor()<playerPaddle.ycor()+50 and ball.ycor()>playerPaddle.ycor()-50:
+        ball.dx*=-1
+    
+    
 
 
 
