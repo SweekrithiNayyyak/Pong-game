@@ -24,11 +24,20 @@ def computerpaddledown():
     y-=20
     computerPaddle.sety(y)
 
+def moveball():
+    ball.dx=3
+    ball.dy=3
+    pen2.clear()
+    
 wn=turtle.Screen()
 wn.title("Pong by Sweek")
 wn.bgcolor("red")
 wn.setup(width=800, height=600)
 wn.tracer(0)
+
+playerScore=0
+computerScore=0
+gameState="start"
 
 playerPaddle=turtle.Turtle()
 playerPaddle.speed(0)
@@ -47,15 +56,32 @@ computerPaddle.penup()
 computerPaddle.goto(350,100)
 
 ball=turtle.Turtle()
-ball.speed(2)
+ball.speed(0)
 ball.shape("square")
 ball.shapesize(stretch_wid=0.5,stretch_len=0.5)
 ball.color("white")
 ball.penup()
 ball.goto(0,0)
-ball.dx=1
-ball.dy=-2
+ball.dx=0
+ball.dy=0
 
+#scoring board
+pen=turtle.Turtle()
+pen.speed(0.5)
+pen.color("white")
+pen.penup()
+pen.hideturtle()
+pen.goto(0,260)
+#pen.write("player : 0   computer:0", align="center",font=("Courier",24,"normal"))
+
+
+pen2=turtle.Turtle()
+pen.speed(0)
+pen2.color("white")
+pen2.penup()
+pen2.hideturtle()
+pen2.goto(0,0)
+pen2.write("Press space to start",align="center",font=("Courier",20,"normal"))
 #to detect keypress on the window
 wn.listen()
 wn.onkeypress(playerpaddleup,"w")
@@ -67,22 +93,52 @@ while True:
     wn.update()
     ball.sety(ball.ycor()+ball.dy)
     ball.setx(ball.xcor()+ball.dx)
-    
+    # if gameState=="start":
+    #     ball.dx=0
+    #     ball.dy=0
+    #     ball.goto(0,0)
+        
+    if gameState=="start":
+        wn.onkeypress(moveball,"space")
+        gameState="play"
+        
     if ball.ycor()>290:
         ball.sety(290)
         ball.dy*=-1
+        
         
     if ball.ycor()<-290:
         ball.sety(-290)
         ball.dy*=-1
     
-    if ball.xcor()>380 or ball.xcor()<-380:
-        ball.setx(0)
-        ball.sety(0)
+    pen.write(f"player : {playerScore}   computer:{computerScore}", align="center",font=("Courier",24,"normal"))
+    
+    if ball.xcor()>380 and gameState=="play":
+        ball.goto(0,0)
+        ball.dx=0
+        ball.dy=0
+        gameState="start"
+        playerScore+=1
+        pen.clear()
+    
+    if ball.xcor()<-380 and gameState=="play":
+        ball.goto(0,0)
+        ball.dx=0
+        ball.dy=0
+        gameState="start"
+        computerScore+=1
+        pen.clear()
     
     #computerPaddle.sety(ball.ycor())
     
-    
+    if computerScore==2 or playerScore==2:
+        gameState="end"
+        ball.hideturtle()
+        pen2.clear()
+        if computerScore>playerScore:
+            pen2.write("Computer won",align="center",font=("Courier",24,"normal"))
+        else:
+            pen2.write("player won")
     
     #paddle and ball collisions
     if ball.xcor()>340 and ball.ycor()<computerPaddle.ycor()+50 and ball.ycor() > computerPaddle.ycor()-50:
